@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Organiser Dashboard</title>
+</head>
+<body>
+
+    <header>
+        <h1><%= settings.site_title %></h1>
+        <p>Author: <%= settings.author_name %></p>
+        <a href="/organiser/settings">Edit Site Settings</a>
+    </header>
+
+    <hr>
+
+    <nav>
+        <h2>Event Management</h2>
+        <a href="/organiser/add-event">Create New Event</a>
+    </nav>
+
+    <main>
+        <h3>All Events</h3>
+        <ul>
+            <% if (events.length > 0) { %>
+                <% events.forEach(function(event) { %>
+                    <li>
+                        <strong><%= event.title %></strong> - <em><%= event.status %></em>
+                        <p><%= event.description %></p>
+                        <p>Price: <%= event.price_tickets %></p>
+
+                        <a href="/organiser/edit-event/<%= event.id %>">Edit Event</a>
+
+                        <form action="/organiser/delete-event/<%= event.id %>" method="POST" style="display:inline;">
+                            <button type="submit" onclick="return confirm('Delete this event?')">Delete</button>
+                        </form>
+                    </li>
+                    <br>
+                <% }); %>
+            <% } else { %>
+                <p>No events found in the database.</p>
+            <% } %>
+        </ul>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Settings</title>
+</head>
+<body>
+    <h1>Site Settings</h1>
+    <form action="/organiser/settings" method="POST">
+        <label>Site Title:</label><br>
+        <input type="text" name="site_title" value="<%= settings.site_title %>" required><br><br>
+
+        <label>Author Name:</label><br>
+        <input type="text" name="author_name" value="<%= settings.author_name %>" required><br><br>
+
+        <button type="submit">Save Changes</button>
+        <a href="/organiser">Cancel</a>
+    </form>
+
+</body>
+</html>

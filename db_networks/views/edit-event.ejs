@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head><title>Edit Event</title></head>
+<body>
+    <h1>Edit Event</h1>
+    
+    <form action="/organiser/edit-event/<%= event.id %>" method="POST">
+        <label>Title:</label><br>
+        <input type="text" name="title" value="<%= event.title %>" required><br><br>
+
+        <label>Description:</label><br>
+        <input type="text" name="description" value="<%= event.description %>" required><br><br>
+
+        <label>Content:</label><br>
+        <textarea name="content" required><%= event.content %></textarea><br><br>
+
+        <label>Price:</label><br>
+        <input type="number" name="price_tickets" step="0.01" value="<%= event.price_tickets %>" required><br><br>
+
+        <label>Status:</label><br>
+        <select name="status">
+            <option value="draft" <%= event.status === 'draft' ? 'selected' : '' %>>Draft</option>
+            <option value="published" <%= event.status === 'published' ? 'selected' : '' %>>Published</option>
+        </select><br><br>
+
+        <button type="submit">Save Changes</button>
+        <a href="/organiser">Cancel</a>
+    </form>
+
+    <hr>
+
+    <h2>Registered Attendees</h2>
+    <% if (attendees.length > 0) { %>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% attendees.forEach(function(person) { %>
+                    <tr>
+                        <td><%= person.attendee_name %></td>
+                        <td><%= person.attendee_email %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>No one has registered for this event yet.</p>
+    <% } %>
+
+</body>
+</html>
