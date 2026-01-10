@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Events</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <header>
+        <h1>Upcoming Events</h1>
+        <a href="/">Return to Home</a>
+    </header>
+
+    <ul>
+        <% events.forEach(function(event) { %>
+            <li>
+                <h3><%= event.title %></h3>
+                <p>Date: <%= event.event_date %></p>
+                <a href="/attendee/event/<%= event.id %>">View & Book Tickets</a>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>

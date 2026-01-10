@@ -2,45 +2,45 @@
 <html>
 <head>
     <title>Organiser Dashboard</title>
+    <link rel="stylesheet" href="/main.css">
 </head>
 <body>
-
     <header>
-        <h1><%= settings.site_title %></h1>
-        <p>Author: <%= settings.author_name %></p>
-        <a href="/organiser/settings">Edit Site Settings</a>
+        <h1>Organiser Dashboard</h1>
+        <nav>
+            <a href="/">Exit to Home</a> | 
+            <a href="/organiser/settings">Global Settings</a>
+        </nav>
     </header>
+    
+    <form action="/organiser/add-event" method="POST">
+        <button type="submit">Create New Event</button>
+    </form>
 
-    <hr>
+    <h2>Published Events</h2>
+    <ul>
+        <% publishedEvents.forEach(function(event) { %>
+            <li>
+                <h3><%= event.title %></h3>
+                <p>Date: <%= event.event_date %></p>
+                <form action="/organiser/delete/<%= event.id %>" method="POST" style="background:none; border:none; padding:0;">
+                    <button type="submit" style="background-color: var(--danger-color);">Delete</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
 
-    <nav>
-        <h2>Event Management</h2>
-        <a href="/organiser/add-event">Create New Event</a>
-    </nav>
-
-    <main>
-        <h3>All Events</h3>
-        <ul>
-            <% if (events.length > 0) { %>
-                <% events.forEach(function(event) { %>
-                    <li>
-                        <strong><%= event.title %></strong> - <em><%= event.status %></em>
-                        <p><%= event.description %></p>
-                        <p>Price: <%= event.price_tickets %></p>
-
-                        <a href="/organiser/edit-event/<%= event.id %>">Edit Event</a>
-
-                        <form action="/organiser/delete-event/<%= event.id %>" method="POST" style="display:inline;">
-                            <button type="submit" onclick="return confirm('Delete this event?')">Delete</button>
-                        </form>
-                    </li>
-                    <br>
-                <% }); %>
-            <% } else { %>
-                <p>No events found in the database.</p>
-            <% } %>
-        </ul>
-    </main>
-
+    <h2>Drafts</h2>
+    <ul>
+        <% draftEvents.forEach(function(event) { %>
+            <li>
+                <strong><%= event.title %></strong><br>
+                <a href="/organiser/edit-event/<%= event.id %>">Edit Event</a> |
+                <form action="/organiser/publish/<%= event.id %>" method="POST" style="display:inline; background:none; border:none; padding:0;">
+                    <button type="submit" style="padding: 5px 10px; margin:0;">Publish</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
 </body>
 </html>

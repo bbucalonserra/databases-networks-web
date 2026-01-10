@@ -1,1 +1,72 @@
-/* Define styles */
+/* University of London Official Palette & Style */
+:root {
+    --primary-color: #002147;    /* UoL Deep Blue */
+    --accent-color: #003366;     /* Secondary Blue */
+    --success-color: #1d70b8;    /* Action Blue */
+    --danger-color: #b10e1e;     /* Academic Red */
+    --bg-color: #f3f2f1;         /* Light Grey */
+    --card-bg: #ffffff;          /* White */
+    --text-color: #0b0c0c;
+    --border-radius: 2px;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body > * { width: 100%; max-width: 800px; }
+
+header {
+    background: var(--card-bg);
+    padding: 30px;
+    border-top: 8px solid var(--primary-color);
+    border-bottom: 1px solid #bfc1c3;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+h1, h2, h3 { color: var(--primary-color); }
+
+h1 { border-bottom: 4px solid var(--primary-color); padding-bottom: 15px; }
+
+.nav-box {
+    background: var(--card-bg);
+    border: 1px solid #bfc1c3;
+    padding: 30px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+form { background: var(--card-bg); padding: 30px; border: 1px solid #bfc1c3; }
+
+label { display: block; margin-top: 20px; font-weight: 700; }
+
+input, textarea {
+    width: 100%; padding: 10px; margin-top: 8px;
+    border: 2px solid var(--text-color);
+}
+
+button, .btn-uol {
+    background-color: var(--primary-color);
+    color: white; border: none; padding: 12px 24px;
+    font-weight: 700; cursor: pointer;
+}
+
+button:hover { background-color: #001126; }
+
+a { color: var(--success-color); font-weight: bold; }
+
+ul { list-style: none; padding: 0; }
+
+li {
+    background: var(--card-bg); border-left: 10px solid var(--primary-color);
+    padding: 20px; margin-bottom: 15px; border-right: 1px solid #bfc1c3;
+    border-top: 1px solid #bfc1c3; border-bottom: 1px solid #bfc1c3;
+}

@@ -3,35 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title><%= settings.site_title %></title>
+    <link rel="stylesheet" href="/main.css">
 </head>
 <body>
     <header>
-        <h1><%= settings.site_title %></h1>
-        <p>Welcome to our event portal! Managed by: <%= settings.author_name %></p>
-        <nav>
-            <a href="/organiser">Go to Organiser Area</a>
-        </nav>
+        <h1>Welcome to <%= settings.site_title %></h1>
+        <p>Managed by: <%= settings.author_name %></p>
     </header>
 
-    <hr>
+    <div class="nav-box">
+        <p>Are you an Organiser?</p>
+        <a href="/organiser">Go to Organiser Dashboard</a>
+    </div>
 
-    <main>
-        <h2>Available Events</h2>
-        <% if (events.length > 0) { %>
-            <ul>
-                <% events.forEach(function(event) { %>
-                    <li>
-                        <h3><%= event.title %></h3>
-                        <p><%= event.description %></p>
-                        <p><strong>Price:</strong> $<%= event.price_tickets %></p>
-                        <a href="/event/<%= event.id %>">View Details & Register</a>
-                    </li>
-                    <br>
-                <% }); %>
-            </ul>
-        <% } else { %>
-            <p>No events are currently available. Check back later!</p>
-        <% } %>
-    </main>
+    <div class="nav-box">
+        <p>Are you an Attendee?</p>
+        <a href="/attendee">Go to Events List</a>
+    </div>
 </body>
 </html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Event</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <header>
+        <h1><%= event.title %></h1>
+        <a href="/attendee">Back to Events List</a>
+    </header>
+    
+    <main>
+        <h3>Event Details</h3>
+        <p><strong>Date:</strong> <%= event.event_date %></p>
+        <p><strong>Description:</strong> <%= event.description %></p>
+        
+        <div>
+            <h4>Ticket Availability</h4>
+            <p>Full Price: £<%= event.full_price_cost %> (<%= event.full_price_tickets %> available)</p>
+            <p>Concession: £<%= event.concession_cost %> (<%= event.concession_tickets %> available)</p>
+        </div>
+
+        <h3>Book Your Tickets</h3>
+        <form action="/attendee/book/<%= event.id %>" method="POST">
+            <label>Your Name:</label>
+            <input type="text" name="attendee_name" placeholder="John Doe" required>
+
+            <label>Full Price tickets?</label>
+            <input type="number" name="num_full" min="0" max="<%= event.full_price_tickets %>" value="0">
+
+            <label>Concession tickets?</label>
+            <input type="number" name="num_conc" min="0" max="<%= event.concession_tickets %>" value="0">
+
+            <button type="submit">Confirm Booking</button>
+        </form>
+    </main>
+</body>
+</html>

@@ -1,23 +1,44 @@
 <!DOCTYPE html>
-<html>
-<head><title>Add New Event</title></head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Event</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
 <body>
-    <h1>Create New Event</h1>
-    <form action="/organiser/add-event" method="POST">
-        <label>Title:</label><br>
-        <input type="text" name="title" required><br><br>
+    <header>
+        <h1>Create New Event</h1>
+        <a href="/organiser">Back to Dashboard</a>
+    </header>
 
-        <label>Description:</label><br>
-        <input type="text" name="description" required><br><br>
+    <main>
+        <form action="/organiser/add-event" method="POST">
+            <h3>General Information</h3>
+            
+            <label for="title">Event Title:</label>
+            <input type="text" id="title" name="title" placeholder="e.g. Summer Concert" required>
 
-        <label>Content:</label><br>
-        <textarea name="content" required></textarea><br><br>
+            <label for="description">Short Description:</label>
+            <input type="text" id="description" name="description" placeholder="Short summary of the event" required>
 
-        <label>Price:</label><br>
-        <input type="number" name="price_tickets" step="0.01" required><br><br>
+            <label for="content">Full Content / Details:</label>
+            <textarea id="content" name="content" rows="5" placeholder="Detailed information about the event..." required></textarea>
 
-        <button type="submit">Create Event</button>
-        <a href="/organiser">Cancel</a>
-    </form>
+            <label for="event_date">Event Date:</label>
+            <input type="date" id="event_date" name="event_date" required>
+
+            <hr>
+            <h3>Ticket Settings</h3>
+            <p><em>Initial ticket configuration</em></p>
+
+            <label for="price_tickets">Base Ticket Price (£):</label>
+            <input type="number" id="price_tickets" name="price_tickets" step="0.01" value="0.00" required>
+
+            <div style="margin-top: 20px;">
+                <button type="submit">Create Event as Draft</button>
+                <a href="/organiser" class="cancel" style="margin-left: 15px;">Cancel</a>
+            </div>
+        </form>
+    </main>
 </body>
 </html>

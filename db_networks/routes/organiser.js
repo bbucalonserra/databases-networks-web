@@ -2,113 +2,105 @@ const express = require("express");
 const router = express.Router();
 
 /**
- * @desc Display the organiser dashboard
+ * @route GET /organiser
+ * @purpose Display dashboard with separate lists for Drafts and Published events.
+ * @inputs None
+ * @outputs Renders 'organiser.ejs' with settings, publishedEvents, draftEvents.
  */
-router.get("/", function (req, res) {
+router.get("/", (req, res) => {
     global.db.get("SELECT * FROM settings WHERE id = 1", (err, settings) => {
-        global.db.all("SELECT * FROM events", (err, events) => {
-            res.render('organiser', { 
-                settings: settings, 
-                events: events || [] 
-            });
+        global.db.all("SELECT * FROM events ORDER BY created_at DESC", (err, events) => {
+            const publishedEvents = events.filter(e => e.status === 'published');
+            const draftEvents = events.filter(e => e.status === 'draft');
+            
+            // Note: We pass separate lists to the view
+            res.render("organiser", { settings, publishedEvents, draftEvents });
         });
     });
 });
 
 /**
- * @desc Show settings page
+ * @route GET /organiser/settings
+ * @purpose Show site settings form.
+ * @inputs None
+ * @outputs Renders 'settings.ejs'
  */
-router.get("/settings", function (req, res) {
+router.get("/settings", (req, res) => {
     global.db.get("SELECT * FROM settings WHERE id = 1", (err, settings) => {
-        res.render('settings', { settings: settings });
+        res.render("settings", { settings });
     });
 });
 
 /**
- * @desc Update site settings
+ * @route POST /organiser/settings
+ * @purpose Update site configuration.
+ * @inputs Form data: site_title, author_name
+ * @outputs Redirects to /organiser
  */
-router.post("/settings", function (req, res) {
+router.post("/settings", (req, res) => {
     const { site_title, author_name } = req.body;
     global.db.run("UPDATE settings SET site_title = ?, author_name = ? WHERE id = 1", 
-        [site_title, author_name], 
-        (err) => {
-            res.redirect("/organiser");
-        }
-    );
+        [site_title, author_name], (err) => res.redirect("/organiser"));
 });
 
 /**
- * @desc Show form to add a new event
- */
-router.get("/add-event", (req, res) => {
-    res.render('add-event');
-});
-
-/**
- * @desc Create a new event
+ * @route POST /organiser/add-event
+ * @purpose Create a blank draft event and redirect to edit page.
+ * @inputs None
+ * @outputs Redirects to /organiser/edit-event/:id
  */
 router.post("/add-event", (req, res) => {
-    const { title, description, content, price_tickets } = req.body;
-    const query = `INSERT INTO events (title, description, content, price_tickets, status) 
-                   VALUES (?, ?, ?, ?, 'draft')`;
-    global.db.run(query, [title, description, content, price_tickets], function(err) {
-        if (err) console.error(err.message);
-        res.redirect("/organiser");
+    global.db.run("INSERT INTO events (title, status) VALUES ('New Event', 'draft')", function(err) {
+        res.redirect(`/organiser/edit-event/${this.lastID}`);
     });
 });
 
 /**
- * @desc DELETE an event from the database
- */
-router.post("/delete-event/:id", (req, res) => {
-    const eventId = req.params.id;
-    global.db.run("DELETE FROM events WHERE id = ?", [eventId], function(err) {
-        if (err) {
-            console.error(err.message);
-            res.status(500).send("Error deleting event");
-        } else {
-            res.redirect("/organiser");
-        }
-    });
-});
-
-/**
- * @desc GET event details and attendees for the edit form
+ * @route GET /organiser/edit-event/:id
+ * @purpose Show form to edit event details.
+ * @inputs URL param: id
+ * @outputs Renders 'edit-event.ejs'
  */
 router.get("/edit-event/:id", (req, res) => {
-    const eventId = req.params.id;
-    
-    // Check if ID exists to avoid 404
-    global.db.get("SELECT * FROM events WHERE id = ?", [eventId], (err, event) => {
-        if (err || !event) {
-            res.status(404).send("Event not found");
-        } else {
-            // Fetch attendees for this specific event
-            global.db.all("SELECT * FROM attendees WHERE event_id = ?", [eventId], (err, attendees) => {
-                res.render('edit-event', { 
-                    event: event, 
-                    attendees: attendees || [] 
-                });
-            });
-        }
+    global.db.get("SELECT * FROM events WHERE id = ?", [req.params.id], (err, event) => {
+        res.render("edit-event", { event });
     });
 });
 
 /**
- * @desc POST updated data to the database
+ * @route POST /organiser/edit-event/:id
+ * @purpose Update all event fields.
+ * @inputs Form data (title, description, dates, ticket info)
+ * @outputs Redirects to /organiser
  */
 router.post("/edit-event/:id", (req, res) => {
-    const eventId = req.params.id;
-    const { title, description, content, price_tickets, status } = req.body;
-    const query = `UPDATE events SET title = ?, description = ?, content = ?, price_tickets = ?, status = ? WHERE id = ?`;
+    const { title, description, event_date, full_price_tickets, full_price_cost, concession_tickets, concession_cost } = req.body;
+    const sql = `UPDATE events SET title=?, description=?, event_date=?, 
+                 full_price_tickets=?, full_price_cost=?, concession_tickets=?, concession_cost=?, 
+                 last_modified=CURRENT_TIMESTAMP WHERE id=?`;
+    global.db.run(sql, [title, description, event_date, full_price_tickets, full_price_cost, concession_tickets, concession_cost, req.params.id], 
+        (err) => res.redirect("/organiser"));
+});
 
-    global.db.run(query, [title, description, content, price_tickets, status, eventId], function(err) {
-        if (err) {
-            res.status(500).send("Update error");
-        } else {
-            res.redirect("/organiser");
-        }
-    });
+/**
+ * @route POST /organiser/publish/:id
+ * @purpose Change status to 'published' and set timestamp.
+ * @inputs URL param: id
+ * @outputs Redirects to /organiser
+ */
+router.post("/publish/:id", (req, res) => {
+    global.db.run("UPDATE events SET status='published', published_at=CURRENT_TIMESTAMP WHERE id=?", 
+        [req.params.id], (err) => res.redirect("/organiser"));
+});
+
+/**
+ * @route POST /organiser/delete/:id
+ * @purpose Delete an event.
+ * @inputs URL param: id
+ * @outputs Redirects to /organiser
+ */
+router.post("/delete/:id", (req, res) => {
+    global.db.run("DELETE FROM events WHERE id=?", [req.params.id], (err) => res.redirect("/organiser"));
 });
 
 module.exports = router;

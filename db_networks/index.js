@@ -1,74 +1,67 @@
 /**
- * index.js - Final Version
+ * index.js - Main Server Entry Point
  */
 
+// Import express library.
+// Creating object for express. 
+// The server is created here, it's in the computers memory.
+// However, it's "sleeping" yet until is called. 
+// SOURCE: https://expressjs.com/en/4x/api.html
 const express = require('express');
 const app = express();
-const port = 3000;
-var bodyParser = require("body-parser");
 
-// Middleware and Settings
-app.use(bodyParser.urlencoded({ extended: true }));
+// Selecting port 3000.
+const port = 3000;
+
+// Import sqlite3 library.
+const sqlite3 = require('sqlite3').verbose();
+
+// Middlewares.
+// Middleware functions are functions that have access to the request object (req),
+// the response object (res), and the next middleware function in the application’s
+// request-response cycle.
+// Summarizing: middlewere are functions that are executed before the route (between requisition and route).
+/* 
+Exemple:
+1. The person types the URL and presses Enter
+2. The browser sends the request
+3. The server receives the request
+4. The middleware is executed
+5. The route is executed
+6. The server sends the response
+7. The browser receives the respons
+*/
+
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 
-// Database Setup
-const sqlite3 = require('sqlite3').verbose();
-global.db = new sqlite3.Database('./database.db', function(err){
+// Database Connection
+global.db = new sqlite3.Database('./database.db',function(err){
     if(err){
         console.error(err);
-        process.exit(1);
+        process.exit(1); 
     } else {
         console.log("Database connected");
         global.db.run("PRAGMA foreign_keys=ON");
     }
 });
 
-//////////////////////////////////////// PUBLIC ROUTES (ATTENDEE) ////////////////////////////////////////
-
-// Home Page: Shows settings and published events
-app.get('/', (req, res) => {
-    global.db.get("SELECT * FROM settings WHERE id = 1", (err, settings) => {
-        global.db.all("SELECT * FROM events WHERE status = 'published'", (err, events) => {
-            res.render('index', { settings: settings, events: events });
-        });
-    });
-});
-
-// Event Details: Shows specific event content
-app.get('/event/:id', (req, res) => {
-    const eventId = req.params.id;
-    global.db.get("SELECT * FROM settings WHERE id = 1", (err, settings) => {
-        const query = "SELECT * FROM events WHERE id = ? AND status = 'published'";
-        global.db.get(query, [eventId], (err, event) => {
-            if (err || !event) {
-                res.status(404).send("Event not found.");
-            } else {
-                res.render('event-details', { settings: settings, event: event });
-            }
-        });
-    });
-});
-
-// Register Attendee: Saves registration in the DB
-app.post('/register-attendee', (req, res) => {
-    const { event_id, attendee_name, attendee_email } = req.body;
-    const query = "INSERT INTO attendees (event_id, attendee_name, attendee_email) VALUES (?, ?, ?)";
-    global.db.run(query, [event_id, attendee_name, attendee_email], function(err) {
-        if (err) {
-            res.status(500).send("Registration error.");
-        } else {
-            res.send("<h1>Registration Successful!</h1><a href='/'>Return Home</a>");
-        }
-    });
-});
-
-//////////////////////////////////////// ORGANISER ROUTES ////////////////////////////////////////
-
+// --------------------------- Import Routes --------------------------- 
+const mainRoutes = require('./routes/main');
 const organiserRoutes = require('./routes/organiser');
-app.use('/organiser', organiserRoutes);
+const attendeeRoutes = require('./routes/attendee');
 
-// Start Server
+// Use Routes. It's here that is defined the name from the URL.
+// The URL is always: index + inside route.
+// E.g. route organiser, inside organiser there's add-event -> http://localhost:3000/organiser/add-event.
+app.use('/', mainRoutes);
+app.use('/organiser', organiserRoutes);
+app.use('/attendee', attendeeRoutes);
+
+
+// Turn on server. "Opens" door 3000.
+// Literally listen a port.
 app.listen(port, () => {
-    console.log(`App running at http://localhost:${port}`);
+    console.log(`App listening on port ${port}`);
 });
