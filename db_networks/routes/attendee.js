@@ -70,4 +70,19 @@ router.post("/book/:id", (req, res) => {
     });
 });
 
+router.get("/my-bookings", (req, res) => {
+    const sql = `
+        SELECT bookings.*, events.title, events.event_date 
+        FROM bookings 
+        JOIN events ON bookings.event_id = events.id
+        ORDER BY bookings.id DESC`;
+
+    global.db.all(sql, [], (err, bookings) => {
+        if (err) {
+            return res.send("Erro ao carregar reservas.");
+        }
+        res.render("my-bookings", { bookings });
+    });
+});
+
 module.exports = router;

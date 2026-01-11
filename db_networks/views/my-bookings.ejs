@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Bookings</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <header>
+        <h1>My Bookings</h1>
+        <nav>
+            <a href="/attendee">Back to Events</a>
+        </nav>
+    </header>
+
+    <main>
+        <% if (bookings.length > 0) { %>
+            <table style="width:100%; border-collapse: collapse; margin-top: 20px;">
+                <thead>
+                    <tr style="background-color: #f2f2f2;">
+                        <th style="padding: 10px; border: 1px solid #ddd;">Event</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Date</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Attendee Name</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Ticket Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% bookings.forEach(function(booking) { %>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;"><%= booking.title %></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;"><%= booking.event_date %></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;"><%= booking.attendee_name %></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">
+                                <%= booking.ticket_type === 'full' ? 'Full Price' : 'Concession' %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>You haven't made any bookings yet.</p>
+            <a href="/attendee" class="btn">Browse Events</a>
+        <% } %>
+    </main>
+</body>
+</html>
