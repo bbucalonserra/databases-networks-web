@@ -1,0 +1,48 @@
+<!-- ---------------------- START NEW CODE ---------------------->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Organiser Dashboard</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <header>
+        <h1>Organiser Dashboard</h1>
+        <nav>
+            <a href="/">Exit to Home</a> | 
+            <a href="/organiser/settings">Global Settings</a>
+        </nav>
+    </header>
+    
+    <form action="/organiser/add-event" method="POST">
+        <button type="submit">Create New Event</button>
+    </form>
+
+    <h2>Published Events</h2>
+    <ul>
+        <% publishedEvents.forEach(function(event) { %>
+            <li>
+                <h3><%= event.title %></h3>
+                <p>Date: <%= event.event_date %></p>
+                <form action="/organiser/delete/<%= event.id %>" method="POST" style="background:none; border:none; padding:0;">
+                    <button type="submit" style="background-color: var(--danger-color);">Delete</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+
+    <h2>Drafts</h2>
+    <ul>
+        <% draftEvents.forEach(function(event) { %>
+            <li>
+                <strong><%= event.title %></strong><br>
+                <a href="/organiser/edit-event/<%= event.id %>">Edit Event</a> |
+                <form action="/organiser/publish/<%= event.id %>" method="POST" style="display:inline; background:none; border:none; padding:0;">
+                    <button type="submit" style="padding: 5px 10px; margin:0;">Publish</button>
+                </form>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>
+<!-- ---------------------- END NEW CODE ---------------------->
