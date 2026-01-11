@@ -6,10 +6,20 @@ const router = express.Router();
  * @purpose List published events sorted by date.
  */
 router.get("/", (req, res) => {
-    // Apenas eventos publicados
-    global.db.all("SELECT * FROM events WHERE status='published' ORDER BY event_date ASC", (err, events) => {
-        if (err) return res.send("Database error");
-        res.render("attendee-home", { events }); // Precisa criar este ficheiro (ver ponto 2)
+    const search = req.query.search || "";
+    
+    // SQL filtrando por título e ordenando sempre por data
+    const sql = `SELECT * FROM events 
+                 WHERE status='published' AND title LIKE ? 
+                 ORDER BY event_date ASC`;
+
+    global.db.all(sql, [`%${search}%`], (err, events) => {
+        if (err) {
+            console.error(err);
+            return res.send("Database error");
+        }
+        // Passamos 'search' de volta para manter o texto no input após a busca
+        res.render("attendee-home", { events, search });
     });
 });
 
