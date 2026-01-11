@@ -50,8 +50,44 @@ router.post("/settings", (req, res) => {
  * @outputs Redirects to /organiser/edit-event/:id
  */
 router.post("/add-event", (req, res) => {
-    global.db.run("INSERT INTO events (title, status) VALUES ('New Event', 'draft')", function(err) {
-        res.redirect(`/organiser/edit-event/${this.lastID}`);
+    // Pegamos os dados do formulário
+    const { 
+        title, 
+        description, 
+        content, // Este é o nome que está no seu HTML
+        event_date, 
+        full_price_tickets, 
+        full_price_cost, 
+        concession_tickets, 
+        concession_cost 
+    } = req.body;
+
+    const sql = `INSERT INTO events (
+        title, 
+        description, 
+        event_date, 
+        status, 
+        full_price_tickets, 
+        full_price_cost, 
+        concession_tickets, 
+        concession_cost
+    ) VALUES (?, ?, ?, 'draft', ?, ?, ?, ?)`;
+
+
+    global.db.run(sql, [
+        title, 
+        content,
+        event_date, 
+        full_price_tickets || 0, 
+        full_price_cost || 0, 
+        concession_tickets || 0, 
+        concession_cost || 0
+    ], (err) => {
+        if (err) {
+            console.error(err);
+            return res.send("Error creating event: " + err.message);
+        }
+        res.redirect("/organiser");
     });
 });
 

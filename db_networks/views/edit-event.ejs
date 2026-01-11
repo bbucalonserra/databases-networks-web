@@ -1,26 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Edit Event</title>
+    <meta charset="UTF-8">
+    <title>Edit Event - University of London</title>
     <link rel="stylesheet" href="/main.css">
 </head>
 <body>
     <header>
         <h1>Edit Event Details</h1>
-        <a href="/organiser">Back to Dashboard</a>
+        <a href="/organiser">← Back to Dashboard</a>
     </header>
     
-    <form action="/organiser/edit-event/<%= event.id %>" method="POST">
-        <label>Title:</label>
-        <input type="text" name="title" value="<%= event.title %>" required>
+    <main>
+        <form action="/organiser/edit-event/<%= event.id %>" method="POST">
+            <h3>General Information</h3>
+            <label>Title:</label>
+            <input type="text" name="title" value="<%= event.title %>" required>
 
-        <label>Description:</label>
-        <textarea name="description" rows="4"><%= event.description %></textarea>
+            <label>Description:</label>
+            <textarea name="description" rows="4" required><%= event.description %></textarea>
 
-        <label>Event Date:</label>
-        <input type="date" name="event_date" value="<%= event.event_date %>" required>
+            <label>Event Date:</label>
+            <input type="date" name="event_date" value="<%= event.event_date %>" required>
 
-        <button type="submit">Update Event</button>
-    </form>
+            <hr>
+            <h3>Ticket & Financial Settings</h3>
+            <p><em>Adjust the availability and pricing for this event.</em></p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                    <label>Full Price Quantity:</label>
+                    <input type="number" name="full_price_tickets" value="<%= event.full_price_tickets %>" min="0">
+                </div>
+                <div>
+                    <label>Full Price Cost (£):</label>
+                    <input type="number" step="0.01" name="full_price_cost" value="<%= event.full_price_cost %>" min="0">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
+                <div>
+                    <label>Concession Quantity:</label>
+                    <input type="number" name="concession_tickets" value="<%= event.concession_tickets %>" min="0">
+                </div>
+                <div>
+                    <label>Concession Cost (£):</label>
+                    <input type="number" step="0.01" name="concession_cost" value="<%= event.concession_cost %>" min="0">
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <button type="submit">Update Event</button>
+            </div>
+        </form>
+    </main>
 </body>
 </html>
