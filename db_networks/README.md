@@ -1,62 +1,48 @@
-##  Coursework Template ##
-### CM2040 Database Networks and the Web ###
+# Event Management System
+### University of London | CM2040 Database Networks and the Web - Coursework
 
-#### Installation requirements ####
+This server is a web application for managing events, allowing organisers to manage listings and attendees to browse and book tickets.
 
-* NodeJS 
-    - follow the install instructions at https://nodejs.org/en/
-    - we recommend using the latest LTS version
-* Sqlite3 
-    - follow the instructions at https://www.tutorialspoint.com/sqlite/sqlite_installation.htm 
-    - Note that the latest versions of the Mac OS and Linux come with SQLite pre-installed
+#### 1. Installation Requirements
+* NodeJS: Latest LTS version is recommended ([https://nodejs.org/en/](https://nodejs.org/en/)).
+* SQLite3: Pre-installed on most Mac/Linux systems. If using Windows, ensure SQLite3 is in your PATH.
 
-#### Using this template ####
+#### 2. Setup and Execution
+To run the application, follow these steps in the project directory:
 
-This template sets you off in the right direction for your coursework. To get started:
+1. Install Dependencies: 
+   npm install
 
-* Run ```npm install``` from the project directory to install all the node packages.
+2. Build the Database: 
+   - On Mac/Linux: npm run build-db
+   - On Windows: npm run build-db-win
 
-* Run ```npm run build-db``` to create the database on Mac or Linux 
-or run ```npm run build-db-win``` to create the database on Windows
+3. Start the Server: 
+   npm run start
 
-* Run ```npm run start``` to start serving the web app (Access via http://localhost:3000)
+4. Access the App: 
+   Open your browser at http://localhost:3000
 
-Test the app by browsing to the following routes:
+#### 3. Core Features & Routes
+Once the server is running, you can test the following main routes:
 
-* http://localhost:3000
-* http://localhost:3000/users/list-users
-* http://localhost:3000/users/add-user
+* Home Page: http://localhost:3000/
+* Organiser Dashboard: http://localhost:3000/organiser
+* Attendee Home: http://localhost:3000/attendee
 
-You can also run: 
-```npm run clean-db``` to delete the database on Mac or Linux before rebuilding it for a fresh start
-```npm run clean-db-win``` to delete the database on Windows before rebuilding it for a fresh start
+#### 4. Extension: Search Engine & Booking Management
+I have improved the server-side functionality with the following extensions:
 
-Please also read the document ```Working with this Template.pdf``` for further guidance.
+* Event Search: Located at /attendee. It uses a server-side SQL LIKE query to filter events by title or description based on user input (req.query.q).
+* My Bookings History: Located at /attendee/my-bookings. This route performs a SQL JOIN to retrieve bookings linked to event details, demonstrating relational database management.
+* Sold Out Logic: The server dynamically checks ticket availability. If an event reaches 0 tickets, the booking button is disabled via server-side logic to maintain data integrity.
 
-##### Creating database tables #####
+#### 5. Additional Libraries
+I used only standard, widely-used libraries to ensure the app runs out-of-the-box:
+* EJS: Server-side templating.
+* SQLite3: Persistent data storage.
+* Express: Web framework.
 
-* All database tables should created by modifying the db_schema.sql 
-* This allows us to review and recreate your database simply by running ```npm run build-db```
-* Do NOT create or alter database tables through other means
-
-
-#### Preparing for submission ####
-
-Make a copy of your project folder.
-In your copy, delete the following files and folders:
-* node_modules
-* .git (the hidden folder with your git repository)
-* database.db (your database)
-
-Make sure that your ``package.json`` file includes all of the dependencies for your project. NB. you need to use the ```--save``` tag each time you use npm to install a dependency
-
-Edit this README.md to explain any specific instructions for setting up or using your application that you want to bring to our attention:
-
-* remove the existing contents that we have provided
-* include any settings that should be adjusted in configuration files
-* include a list of the additional libraries you are using
-* anything else we need to know in order to successfully run your app
-
-
-NB. we will ONLY run ```npm install```, ```npm run build-db```, and ```npm run start``` . We will NOT install additional packages to run your code and will NOT run additional build scripts. Be careful with any additional node dependencies that you use.
-
+#### 6. Database Notes
+* All table structures are defined in db_schema.sql.
+* Foreign Key constraints are enabled (PRAGMA foreign_keys=ON) to ensure data integrity.
