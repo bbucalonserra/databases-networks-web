@@ -1,10 +1,15 @@
-const express = require('express');
+const express = require("express");
+const ejs = require('ejs');
+require('dotenv').config();
+const port = process.env.PORT;
 
-const server = express();
+// "Hey express, vou te chamar de app."
+const app = express();
 
-server.get('/curso', function (req, res) {
-    console.log("ACESSOU A ROTA");
-    return res.send("Hi!!!!")
-});
+const mainRoutes = require("./routes/main");
 
-server.listen(3000);
+app.use('/', mainRoutes);
+
+app.listen(port, function() {
+    console.log(`Listening to the port ${port}...`)
+})
