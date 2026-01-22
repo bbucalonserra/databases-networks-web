@@ -3,13 +3,17 @@
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^5.2.1",
+    "express-session": "^1.18.2",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   },
   "scripts": {
-    "start": "node index",
-    "dev": "node --watch --env-file=.env index",
+    "start": "node src/server",
+    "dev": "node --watch --env-file=.env src/server.js",
     "build-db": "sqlite3 database.db < db_schema.sql",
     "clean-db": "del database.db"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }
