@@ -5,7 +5,7 @@ const express = require("express");
 const router = express.Router()
 
 // Importando do database.js
-const db = require("../config/database");
+const db = require("../config/database.js");
 
 
 // EJS.
@@ -15,7 +15,7 @@ router.get("/forms", function(req, res) {
     return res.render("forms.ejs");
 });
 
-//
+// Update forms.
 router.post("/forms", function (req, res) {
     const age = req.body.age;
     const sex = req.body.sex;
@@ -66,17 +66,19 @@ router.post("/forms", function (req, res) {
     db.run(createFormsQuery, params = params_forms, function(err){
         if (err) {
 
-            //
+            // Return if error.
             return res.send("Error while submiting forms: " + err.message);
         } 
 
+        // Update the forms completed to 1.
         db.run("UPDATE users SET is_forms_completed = 1 WHERE username = ?", params = loggedUser, function(err){
           if(err) {
             return res.send("Erro na atualização da coluna is_forms_completed");
           }  
         })
 
-        res.send("DONE!");
+        // Redirect to recommendations.
+        res.redirect("/recommendations");
     })
 })
 

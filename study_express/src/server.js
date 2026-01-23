@@ -17,6 +17,7 @@ const path = require('path');
 const main = require("./routes/main");
 const users = require("./routes/users");
 const forms = require("./routes/forms");
+const recommendations = require("./routes/recommendations");
 
 // Configuração para EJS.
 // __dirname é a pasta 'src'. path.join garante que ele ache 'src/views'
@@ -28,6 +29,9 @@ app.set('view engine', 'ejs');
 
 // Basicamente, dizendo para o express a aprender a ler formulários.
 app.use(express.urlencoded({ extended: true }));
+
+// Dizer que o public é estatico.
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Mantém na memória. Cria um cookie no navegador que guarda um código de identificação
 // criptografado (connect.sid). Já no servidor, na memoria RAM, ele reserva espaço 
@@ -47,6 +51,7 @@ app.use(session({
 app.use('/', main);
 app.use('/', users);
 app.use('/', forms);
+app.use('/', recommendations);
 
 // Escutando a porta. Nao chama os arquivos guardados anteriores, ele apenas guarda na memória.
 app.listen(port, function() {

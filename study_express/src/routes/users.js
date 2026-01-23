@@ -5,11 +5,20 @@ const express = require("express");
 const router = express.Router()
 
 // Importando do database.js
-const db = require("../config/database");
+const db = require("../config/database.js");
 
 // Rota de login.
 router.get("/login", function(req, res) {
-    return res.render("login.ejs")
+    // SE ERRO:
+    // Pegamos a mensagem que foi salva no POST (se existir)
+    const erroMsg = req.session.errorMessage;
+
+    // Deletamos da sessão logo após ler. 
+    // Assim, se ele der F5, a mensagem some da tela.
+    delete req.session.errorMessage;
+
+    // Passamos a mensagem para o EJS (se estiver vazio, passará undefined)
+    return res.render("login.ejs", { erro: erroMsg });
 });
 
 // Método para verificar se o usuário existe, caso sim, loga, caso não, não loga.
@@ -29,7 +38,7 @@ router.post("/login", function(req, res) {
         
         // Se houver algum erro, mostrar o erro.
         if (err) {
-            res.send(err.message);
+            return res.send(err.message);
         }
 
         // Se tiver usuário, loga corretamente. Caso nao, envia usuario ou senha inválido.
@@ -41,7 +50,7 @@ router.post("/login", function(req, res) {
             // Logo, quando fazemos user.is_forms_completed, estamos pegando a coluna.
             // Se o forms estiver completo.
             if (user.is_forms_completed === 1) {
-                return res.send("FORMS COMPLETO!")
+                return res.redirect("/recommendations"); 
             } else {
 
                 // Se o forms nao estiver completo. vai pra tela de forms.
@@ -50,7 +59,9 @@ router.post("/login", function(req, res) {
 
         } else {
             // Senha invalida ou usuario.
-            return res.send("Usuário ou senha inválidos.");
+            req.session.errorMessage = "Invalid user or password.";
+
+            return res.redirect("/login");
         }
     })
 })
@@ -89,12 +100,12 @@ router.post("/create-user", function(req, res) {
         } 
 
         db.run(createUsernameQuery, params = [username], function(err){
-            //
+            // Erro no formulário.
             if (err) {
                 return res.send("Erro ao registrar no formulário: " + err.message);
             }
 
-            //
+            // Redireciona para tela de login.
             return res.redirect("/login");
         });
     });

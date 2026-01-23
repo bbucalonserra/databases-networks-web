@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Credit Recommendation Platform</title>
+</head>
+<body>
+
+    <header>
+        <h1>Credit Solutions</h1>
+        <p>Select the financial product that best suits your needs.</p>
+    </header>
+
+    <main>
+        <h2>Our Products</h2>
+        <section id="recommendations">
+            <!-- 
+            Existem tres formas para implementar no EJS, são elas:
+            -  < % = ... % > É a saida com escape, ela limpa o conteúdo, usa em 99% dos casos.
+            - < % - ... % > Entrega exatamente o texto como ele está no JSON, logo se o JSON ja tem as tags, usar essa.
+            - < % ... % > Nao escreve nada, usada normalmente para as funcoes, como forEach, else, const, etc.
+           
+           Abaixo, colocamos apenas o que é pra ser repetido na lógica. Tags
+           Nao ficam dentro dos "< %", etc.
+           
+            -->
+            <% if (products.length > 0) { %>
+                <% products.forEach(function (p) { %>
+                    <article class="product-card">
+                        <span class="category-badge"><%= p.category %></span>
+                        <h3><%= p.name %></h3>
+                        <p><%= p.description %></p>
+                        
+                        <div class="match-text" data-probability="<%= p.probability %>">
+                            Matching Score: <%= Math.round(p.probability * 1000) %>
+                        </div>
+                        
+                        <div class="match-container">
+                            <div class="match-bar" style="width: <%= Math.round(p.probability * 100) %>%;" data-probability="<%= p.probability %>"></div>
+                    </article>
+                <% }) %>
+            <% } %>
+        </section>
+        <br><br>
+        <a href="/forms">New forms</a>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Credit Recommendation Service. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

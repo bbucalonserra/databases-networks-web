@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="/css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
-    <h1>Aqui já é EJS.</h1>
-    <h2>Agora, vou colocar uma tela de login. </h2>
+    <header>
+        <h1> Login </h1>
+    </header>
+
+
+    <% if (erro) { %>
+        <p style="color: red;"><%= erro %></p>
+    <% } %>
 
     <form method="POST" action="/login">
         <label>Username: </label> <br>
@@ -23,5 +30,9 @@
     <a href="/create-user">Don't have a login? Create a new user here.</a> <br>
 
     <a href="/">Back to homepage</a>
+
+    <footer>
+        <p>&copy; 2026 Credit Recommendation Service. All rights reserved.</p>
+    </footer>
 </body>
 </html>

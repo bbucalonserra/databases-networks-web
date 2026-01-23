@@ -1,125 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="/css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forms</title>
 </head>
 <body>
-    <h1>First of all, let's start by answering a few questions to improve your experience with us.</h1>
+    <header>
+        <h1>First of all, let's start by answering a few questions to improve your experience with us.</h1>
+    </header>
+    <main>
+        <form method="post" action="/forms">
 
-    <form method="post" action="/forms">
+            <!--Primeira Pergunta-->
+            <p>How old are you?</p>
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age">
 
-        <!--Primeira Pergunta-->
-        <p>How old are you?</p>
-        <label for="age">Age</label>
-        <input type="number" id="age" name="age"><br>
+            <!--Segunda Pergunta-->
+            <p>What is your gender?</p>
+            <!--NOTE: o ID é o identificador unico do HTML-->
+            <!--NOTE: type é o tipo do input (do forms).-->
+            <!--NOTE: Name é o nome do grupo, radios com o mesmo nome apenas um pode ser selecionado.-->
+            <!--NOTE: Value é o VALOR ENVIADO AO SERVIDOR quando marcado.-->
+            <!--NOTE: For é aponta para o id do input-->
+            <input type="radio" id="male-selection" name="sex" value="male">
+            <label for="male-selection">Male</label><br>
 
-        <!--Segunda Pergunta-->
-        <p>What is your gender?</p>
-        <!--NOTE: o ID é o identificador unico do HTML-->
-        <!--NOTE: type é o tipo do input (do forms).-->
-        <!--NOTE: Name é o nome do grupo, radios com o mesmo nome apenas um pode ser selecionado.-->
-        <!--NOTE: Value é o VALOR ENVIADO AO SERVIDOR quando marcado.-->
-        <!--NOTE: For é aponta para o id do input-->
-        <input type="radio" id="male-selection" name="sex" value="male">
-        <label for="male-selection">Male</label><br>
+            <input type="radio" id="female-selection" name="sex" value="female">
+            <label for="female-selection">Female</label><br>
 
-        <input type="radio" id="female-selection" name="sex" value="female">
-        <label for="female-selection">Female</label><br>
+            <!--Terceira Pergunta-->
+            <p>What is your education level?</p>
+            <input type="radio" id="primary-education" name="education" value="primary">
+            <label for="primary-education">Primary</label><br>
 
-        <!--Terceira Pergunta-->
-        <p>What is your education level?</p>
-        <input type="radio" id="primary-education" name="education" value="primary">
-        <label for="primary-education">Primary</label><br>
+            <input type="radio" id="secondary-education" name="education" value="secondary">
+            <label for="secondary-education">Secondary</label><br>
 
-        <input type="radio" id="secondary-education" name="education" value="secondary">
-        <label for="secondary-education">Secondary</label><br>
+            <input type="radio" id="bachelor-education" name="education" value="bachelor">
+            <label for="bachelor-education">Bachelor</label><br>
 
-        <input type="radio" id="bachelor-education" name="education" value="bachelor">
-        <label for="bachelor-education">Bachelor</label><br>
+            <input type="radio" id="postgraduate-education" name="education" value="postgraduate">
+            <label for="postgraduate-education">Postgraduate</label><br>
 
-        <input type="radio" id="postgraduate-education" name="education" value="postgraduate">
-        <label for="postgraduate-education">Postgraduate</label><br>
+            <!--Quarta Pergunta-->
+            <p>Do you have children?</p>
+            <input type="radio" id="has-children" name="has_children" value="Yes">
+            <label for="has-children">Yes</label><br>
 
-        <!--Quarta Pergunta-->
-        <p>Do you have children?</p>
-        <input type="radio" id="has-children" name="has_children" value="Yes">
-        <label for="has-children">Yes</label><br>
+            <input type="radio" id="has-not-children" name="has_children" value="No">
+            <label for="has-not-children">No</label><br>
 
-        <input type="radio" id="has-not-children" name="has_children" value="No">
-        <label for="has-not-children">No</label><br>
+            <!--Quinta Pergunta-->
+            <p>Do you have any property in your name?</p>
+            <input type="radio" id="has-property" name="has_property" value="Yes">
+            <label for="has-property">Yes</label><br>
 
-        <!--Quinta Pergunta-->
-        <p>Do you have any property in your name?</p>
-        <input type="radio" id="has-property" name="has_property" value="Yes">
-        <label for="has-property">Yes</label><br>
+            <input type="radio" id="has-not-property" name="has_property" value="No">
+            <label for="has-not-property">No</label><br>
 
-        <input type="radio" id="has-not-property" name="has_property" value="No">
-        <label for="has-not-property">No</label><br>
+            <!--Sexta Pergunta-->
+            <p>Do you have a car?</p>
+            <input type="radio" id="has-car" name="has_car" value="Yes">
+            <label for="has-car">Yes</label><br>
 
-        <!--Sexta Pergunta-->
-        <p>Do you have a car?</p>
-        <input type="radio" id="has-car" name="has_car" value="Yes">
-        <label for="has-car">Yes</label><br>
+            <input type="radio" id="has-not-car" name="has_car" value="No">
+            <label for="has-not-car">No</label><br>
 
-        <input type="radio" id="has-not-car" name="has_car" value="No">
-        <label for="has-not-car">No</label><br>
+            <!--Setima Pergunta-->
+            <p>Have you ever had a loan?</p>
+            <input type="radio" id="has-loan" name="ever_loan" value="Yes">
+            <label for="has-loan">Yes</label><br>
 
-        <!--Setima Pergunta-->
-        <p>Have you ever had a loan?</p>
-        <input type="radio" id="has-loan" name="ever_loan" value="Yes">
-        <label for="has-loan">Yes</label><br>
+            <input type="radio" id="has-not-loan" name="ever_loan" value="No">
+            <label for="has-not-loan">No</label><br>
 
-        <input type="radio" id="has-not-loan" name="ever_loan" value="No">
-        <label for="has-not-loan">No</label><br>
+            <!--Oitava Pergunta-->
+            <p>Did you already pay your loan?</p>
+            <input type="radio" id="has-paid-loan" name="loan_paid" value="Yes">
+            <label for="has-paid-loan">Yes</label><br>
 
-        <!--Oitava Pergunta-->
-        <p>Did you already pay your loan?</p>
-        <input type="radio" id="has-paid-loan" name="loan_paid" value="Yes">
-        <label for="has-paid-loan">Yes</label><br>
+            <input type="radio" id="has-not-paid-loan" name="loan_paid" value="No">
+            <label for="has-not-paid-loan">No</label><br>
 
-        <input type="radio" id="has-not-paid-loan" name="loan_paid" value="No">
-        <label for="has-not-paid-loan">No</label><br>
+            <input type="radio" id="no-loan" name="loan_paid" value="No Loan">
+            <label for="no-loan">No Loan</label><br>
 
-        <input type="radio" id="no-loan" name="loan_paid" value="No Loan">
-        <label for="no-loan">No Loan</label><br>
+            <!--Nona Pergunta-->
+            <p>What is your annual salary range?</p>
+            <input type="radio" id="salary1" name="annual_salary" value="<30k">
+            <label for="salary1">Under $30,000</label><br>
 
-        <!--Nona Pergunta-->
-        <p>What is your annual salary range?</p>
-        <input type="radio" id="salary1" name="annual_salary" value="<30k">
-        <label for="salary1">Under $30,000</label><br>
+            <input type="radio" id="salary2" name="annual_salary" value="30k-50k">
+            <label for="salary2">$30,000 - $50,000</label><br>
 
-        <input type="radio" id="salary2" name="annual_salary" value="30k-50k">
-        <label for="salary2">$30,000 - $50,000</label><br>
+            <input type="radio" id="salary3" name="annual_salary" value="50k-80k">
+            <label for="salary3">$50,000 - $80,000</label><br>
 
-        <input type="radio" id="salary3" name="annual_salary" value="50k-80k">
-        <label for="salary3">$50,000 - $80,000</label><br>
+            <input type="radio" id="salary4" name="annual_salary" value="80k-120k">
+            <label for="salary4">$80,000 - $120,000</label><br>
 
-        <input type="radio" id="salary4" name="annual_salary" value="80k-120k">
-        <label for="salary4">$80,000 - $120,000</label><br>
+            <input type="radio" id="salary5" name="annual_salary" value=">120k">
+            <label for="salary5">Over $120,000</label><br>
 
-        <input type="radio" id="salary5" name="annual_salary" value=">120k">
-        <label for="salary5">Over $120,000</label><br>
+            <!--Decima Pergunta-->
+            <p>What is your total invested amount?</p>
+            <input type="radio" id="inv1" name="invested_amount" value="<1k">
+            <label for="inv1">Less than $1,000</label><br>
 
-        <!--Decima Pergunta-->
-        <p>What is your total invested amount?</p>
-        <input type="radio" id="inv1" name="invested_amount" value="<1k">
-        <label for="inv1">Less than $1,000</label><br>
+            <input type="radio" id="inv2" name="invested_amount" value="1k-10k">
+            <label for="inv2">$1,000 - $10,000</label><br>
 
-        <input type="radio" id="inv2" name="invested_amount" value="1k-10k">
-        <label for="inv2">$1,000 - $10,000</label><br>
+            <input type="radio" id="inv3" name="invested_amount" value="10k-50k">
+            <label for="inv3">$10,000 - $50,000</label><br>
 
-        <input type="radio" id="inv3" name="invested_amount" value="10k-50k">
-        <label for="inv3">$10,000 - $50,000</label><br>
+            <input type="radio" id="inv4" name="invested_amount" value=">50k">
+            <label for="inv4">More than $50,000</label><br>
 
-        <input type="radio" id="inv4" name="invested_amount" value=">50k">
-        <label for="inv4">More than $50,000</label><br>
+            <br>
+            <button type="submit">Submit</button>
 
-        <br>
-        <button type="submit">Submit</button>
+        </form>
+    </main>
 
-    </form>
-
+    <footer>
+        <p>&copy; 2026 Credit Recommendation Service. All rights reserved.</p>
+    </footer>
+    
 </body>
 </html>

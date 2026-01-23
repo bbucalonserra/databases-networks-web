@@ -5,7 +5,7 @@ const sqlite3 = require('sqlite3')
 const path = require('path');
 
 // Importar o banco de dados. Vamos instancia-lo chamando de "db".
-const dbPath = path.resolve(__dirname, '../../database.db');
+const dbPath = path.resolve(__dirname, '../data/database.db');
 const db = new sqlite3.Database(dbPath);
 
 // Exporta apenas o objeto de conexão
