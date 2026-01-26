@@ -17,6 +17,15 @@
     a função que tem lá dentro. -->
 
     <main>
+        <!--Mensagem de erro, caso erro. -->
+        <% if (errorMessage) { %>
+            <div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 15px; border-radius: 5px;">
+                <%= errorMessage %>
+            </div>
+        <% } %>
+
+        <!--Action: define pra onde os dados serão enviados, ou seja, a rota. No caso,
+        eles serão enviados via POST para o endpoint /create-user. -->
         <form action="/create-user" method="POST">
                 <label>Name: </label> <br>
                 <input type="text" id="name" name="name"> <br>

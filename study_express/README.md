@@ -134,7 +134,12 @@ O objeto response possui diversos métodos. Exemplos:
     ```
 
 
+## Utilizando FastAPI
+Produtização de modelos utilizando FastAPI.
 
+
+REST API mandatoriamente conversam via json. Tem padrões (manual) para isto.
+PROCURAR DEPOIS OS PADRÕES.
 
 
 
@@ -147,45 +152,3 @@ O objeto response possui diversos métodos. Exemplos:
 CERI, S. et al. (2003) Designing Data-Intensive Web Applications. Elsevier Science & Technology.
 
 TECHTERMS (2014) Web Application. Available at: https://techterms.com/definition/web_application (Accessed: 17 January 2026).
-
-
-
-
-
-
-
-____
-## Query params e route params
-
-•	Query params = ?nome=NodeJS (o que passa na frente da rota, é uma informação extra colocada na URL para dizer algo ao servidor, sem mudar a pagina que está sendo acessada)
-?chave=valor 
-
-?  começa os parametros
-= liga nome e valor
-& separa parametros
-
-É utilizado em filtros, ordenação, etc.
-É UM OBJETO DE JAVA SCRIPT, NAO JSON. Exemplo:
-{ pagina: "2", ativo: "true" }
-
-Fica:
-/usuarios?ativo=true&pagina=2
-
-•	Route params = /curso/2 (passa dentro da rota)
-Vc coloca depois do get (ou router) um “:” + “o que esta esperando”. Exemplo:
-Server.get(‘/curso/:id’...
-
-•	Request body = {nome: ‘nodejs’, tipo: ‘backend’} (manda um objeto no corpo da requisição)
-
-
-A função sempre vai ter este padrão para requisição e response:
-router.get("/", (req, res) => {
-res.
-OU
-req.
-}
-
-Para req (request), temos:
-•	req.params.NOME, o NOME eu decido. Exemplo: outer.get('/editar/:abacaxi'), tem que ser req.params.abacaxi.
-	
-

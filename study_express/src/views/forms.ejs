@@ -16,7 +16,7 @@
             <!--Primeira Pergunta-->
             <p>How old are you?</p>
             <label for="age">Age</label>
-            <input type="number" id="age" name="age">
+            <input type="number" id="age" name="age" required>
 
             <!--Segunda Pergunta-->
             <p>What is your gender?</p>
@@ -25,7 +25,10 @@
             <!--NOTE: Name é o nome do grupo, radios com o mesmo nome apenas um pode ser selecionado.-->
             <!--NOTE: Value é o VALOR ENVIADO AO SERVIDOR quando marcado.-->
             <!--NOTE: For é aponta para o id do input-->
-            <input type="radio" id="male-selection" name="sex" value="male">
+            <!--NOTE: o campo required faz com que precisa preencher o forms.-->
+            <!--NOTE: em radio, o HTML entende que se o primeiro é required, todos os outros COM
+            O MESMO NOME (name) serão required também.-->
+            <input type="radio" id="male-selection" name="sex" value="male" required>
             <label for="male-selection">Male</label><br>
 
             <input type="radio" id="female-selection" name="sex" value="female">
@@ -33,7 +36,7 @@
 
             <!--Terceira Pergunta-->
             <p>What is your education level?</p>
-            <input type="radio" id="primary-education" name="education" value="primary">
+            <input type="radio" id="primary-education" name="education" value="primary" required>
             <label for="primary-education">Primary</label><br>
 
             <input type="radio" id="secondary-education" name="education" value="secondary">
@@ -47,7 +50,7 @@
 
             <!--Quarta Pergunta-->
             <p>Do you have children?</p>
-            <input type="radio" id="has-children" name="has_children" value="Yes">
+            <input type="radio" id="has-children" name="has_children" value="Yes" required>
             <label for="has-children">Yes</label><br>
 
             <input type="radio" id="has-not-children" name="has_children" value="No">
@@ -55,7 +58,7 @@
 
             <!--Quinta Pergunta-->
             <p>Do you have any property in your name?</p>
-            <input type="radio" id="has-property" name="has_property" value="Yes">
+            <input type="radio" id="has-property" name="has_property" value="Yes" required>
             <label for="has-property">Yes</label><br>
 
             <input type="radio" id="has-not-property" name="has_property" value="No">
@@ -63,7 +66,7 @@
 
             <!--Sexta Pergunta-->
             <p>Do you have a car?</p>
-            <input type="radio" id="has-car" name="has_car" value="Yes">
+            <input type="radio" id="has-car" name="has_car" value="Yes" required>
             <label for="has-car">Yes</label><br>
 
             <input type="radio" id="has-not-car" name="has_car" value="No">
@@ -71,7 +74,7 @@
 
             <!--Setima Pergunta-->
             <p>Have you ever had a loan?</p>
-            <input type="radio" id="has-loan" name="ever_loan" value="Yes">
+            <input type="radio" id="has-loan" name="ever_loan" value="Yes" required>
             <label for="has-loan">Yes</label><br>
 
             <input type="radio" id="has-not-loan" name="ever_loan" value="No">
@@ -79,7 +82,7 @@
 
             <!--Oitava Pergunta-->
             <p>Did you already pay your loan?</p>
-            <input type="radio" id="has-paid-loan" name="loan_paid" value="Yes">
+            <input type="radio" id="has-paid-loan" name="loan_paid" value="Yes" required>
             <label for="has-paid-loan">Yes</label><br>
 
             <input type="radio" id="has-not-paid-loan" name="loan_paid" value="No">
@@ -90,7 +93,7 @@
 
             <!--Nona Pergunta-->
             <p>What is your annual salary range?</p>
-            <input type="radio" id="salary1" name="annual_salary" value="<30k">
+            <input type="radio" id="salary1" name="annual_salary" value="<30k" required>
             <label for="salary1">Under $30,000</label><br>
 
             <input type="radio" id="salary2" name="annual_salary" value="30k-50k">
@@ -107,7 +110,7 @@
 
             <!--Decima Pergunta-->
             <p>What is your total invested amount?</p>
-            <input type="radio" id="inv1" name="invested_amount" value="<1k">
+            <input type="radio" id="inv1" name="invested_amount" value="<1k" required>
             <label for="inv1">Less than $1,000</label><br>
 
             <input type="radio" id="inv2" name="invested_amount" value="1k-10k">

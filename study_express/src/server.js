@@ -13,7 +13,8 @@ const session = require('express-session');
 // Importo o modulo path.
 const path = require('path');
 
-// Chame tudo que está no routes/main.js.
+// Chame tudo que está nas rotas.
+// O REQUIRE 
 const main = require("./routes/main");
 const users = require("./routes/users");
 const forms = require("./routes/forms");

@@ -68,7 +68,9 @@ router.post("/login", function(req, res) {
 
 // Rota de criar usuário.
 router.get("/create-user", function(req, res) {
-    return res.render("create-user.ejs")
+
+    // Separamos uma mensagem de erro nulla.
+    return res.render("create-user", { errorMessage: null });
 });
 
 // Vamos coletar o que foi pego pelo input do usuario via HTML e armazena-lo (POST) em variáveis.
@@ -96,14 +98,19 @@ router.post("/create-user", function(req, res) {
         // Se algum erro. Caso nao, cria.
         if (err) {
             //
-            return res.send("Error while creating user: " + err.message);
-        } 
+            if(err.message.includes("UNIQUE constraint failed") || err.code === 'SQLITE_CONSTRAINT') {
+                return res.status(400).render("create-user", {errorMessage: "This user alerady exist."});
+            }
+        }
 
         db.run(createUsernameQuery, params = [username], function(err){
-            // Erro no formulário.
-            if (err) {
-                return res.send("Erro ao registrar no formulário: " + err.message);
+            // Erro no formulário. Redireciona para create-user.
+        if (err) {
+            //
+            if(err.message.includes("UNIQUE constraint failed") || err.code === 'SQLITE_CONSTRAINT') {
+                return res.status(400).render("create-user", {errorMessage: "This user alerady exist."});
             }
+        }
 
             // Redireciona para tela de login.
             return res.redirect("/login");
