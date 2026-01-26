@@ -7,3 +7,8 @@ venv/
 # Node.js
 node_modules/
 npm-debug.log
+
+# Database
+src/data/*.db
+src/data/*.sqlite
+src/data/*.sqlite3
