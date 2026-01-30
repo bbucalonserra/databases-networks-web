@@ -146,13 +146,7 @@ PROCURAR DEPOIS OS PADRÕES.
 
 
 ## Ordem de execução
-cd ml_api
-
-python -m venv venv
-
-source venv/Scripts/activate
-
-pip install -r requirements.txt
+npm install > npm run build-db > cd ml_api > pip install -r requirements.txt > cd ..
 
 
 

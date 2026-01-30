@@ -2,10 +2,10 @@
 import pickle
 import pandas as pd
 from fastapi import FastAPI
-from server.models import ModelInput
+from ml_api.server.models import ModelInput
 
 # Abrindo o arquivo PKL contendo o modelo.
-with open(r"./models/trained_model-0.1.0.pkl", "rb") as f:
+with open("ml_api/models/trained_model-0.1.0.pkl", "rb") as f:
     model = pickle.load(f)
 
 # Instanciamos a aplicação, gerando um objeto chamado app para utilizar o FastAPI.
