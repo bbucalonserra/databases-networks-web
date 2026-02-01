@@ -146,7 +146,7 @@ PROCURAR DEPOIS OS PADRÕES.
 
 
 ## Ordem de execução
-npm install > npm run build-db > cd ml_api > pip install -r requirements.txt > cd ..
+npm install > npm run build-db > cd ml_api > pip install -r requirements.txt > cd .. > Ate raiz >> uvicorn ml_api.server.main:app
 
 
 
